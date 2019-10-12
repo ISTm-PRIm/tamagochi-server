@@ -19,6 +19,13 @@
 		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
 		<springfox.swagger.version>2.9.2</springfox.swagger.version>
 	</properties>
+<!--https://github.com/ISTm-PRIm/tamagochi-server.git-->
+	<scm>
+		<connection>scm:git:ssh://git@github.com/ISTm-PRIm/tamagochi-server.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/ISTm-PRIm/tamagochi-server.git</developerConnection>
+		<url>https://github.com/ISTm-PRIm/tamagochi-server.git</url>
+		<tag>HEAD</tag>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -101,6 +108,10 @@
 						${project.build.outputDirectory}/version.properties
 					</generateGitPropertiesFilename>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
