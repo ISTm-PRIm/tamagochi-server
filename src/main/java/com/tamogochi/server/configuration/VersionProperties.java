@@ -7,21 +7,21 @@ import org.springframework.context.annotation.PropertySource;
 
 @Getter
 @Configuration
-@PropertySource("classpath:version.properties")
+//@PropertySource("classpath:version.properties")
 public class VersionProperties {
 
     private static final String VERSION_FORMAT = "%s.%s.%s.%s";
 
-    @Value("${git.build.version}")
+//    @Value("${git.build.version}")
     private String version;
 
-    @Value("${git.branch}")
+//    @Value("${git.branch}")
     private String branch;
 
-    @Value("${git.commit.id.abbrev}")
+//    @Value("${git.commit.id.abbrev}")
     private String hash;
 
-    @Value("${git.total.commit.count}")
+//    @Value("${git.total.commit.count}")
     private String count;
 
     public String format() {
