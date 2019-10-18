@@ -6,7 +6,7 @@ import com.tamogochi.server.exception.EntityNotFoundException;
 import com.tamogochi.server.exception.IncorrectRequestException;
 import com.tamogochi.server.exception.Message;
 import com.tamogochi.server.repository.PetRepository;
-import com.tamogochi.server.repository.UserRepository;
+import com.tamogochi.server.repository.UserRepository_old;
 import com.tamogochi.server.service.api.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ import java.util.UUID;
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
-    private final UserRepository userRepository;
+    private final UserRepository_old userRepository;
     private final int INDICATOR_MAX_VALUE = 100;
 
     @Autowired
-    public PetServiceImpl(PetRepository petRepository, UserRepository userRepository) {
+    public PetServiceImpl(PetRepository petRepository, UserRepository_old userRepository) {
         this.petRepository = petRepository;
         this.userRepository = userRepository;
     }
