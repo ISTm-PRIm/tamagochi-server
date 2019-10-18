@@ -15,12 +15,6 @@ CREATE TABLE PET (
 CREATE TABLE USERS (
   id              VARCHAR(36) PRIMARY KEY,
   email           VARCHAR(100),
-  name            VARCHAR(255),
-  imageUrl        VARCHAR(255),
-  emailVerified   BOOLEAN,
-  isOnline        BOOLEAN,
-  password        VARCHAR(255),
-  provider        VARCHAR(255),
   create_date      TIMESTAMP,
   pet             VARCHAR(36) NULL,
   CONSTRAINT FK_PET_USER
