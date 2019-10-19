@@ -7,5 +7,20 @@
    <changeSet id="v1.0" author="homjakova-tg">
       <tagDatabase tag="v1.0"/>
    </changeSet>
-   <include file="db.migrations/v1.0/init-schema.sql"/>
+   <include file="db.migrations/v1.0/init-schema-v0.1.0.sql"/>
+
+   <changeSet id="v1.1" author="oleg">
+      <addColumn tableName="USERS">
+         <column name="name" type="varchar(255)"></column>
+         <column name="imageUrl" type="varchar(255)"></column>
+         <column name="password" type="varchar(255)"></column>
+         <column name="provider" type="varchar(255)"></column>
+         <column name="isOnline" type="BOOLEAN"></column>
+         <column name="emailVerified" type="BOOLEAN"></column>
+      </addColumn>
+   </changeSet>
+
+   <changeSet id="3" author="oleg">
+      <modifyDataType tableName="USERS" columnName="id" newDataType="bigint"></modifyDataType>
+   </changeSet>
 </databaseChangeLog>
