@@ -1,6 +1,5 @@
 package com.tamogochi.server.entity;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,8 +10,9 @@ import javax.persistence.*;
 public class Scheduler implements Comparable<Scheduler> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String cron;
+    @Enumerated(EnumType.STRING)
     private Indicator indicator;
     private int decrementValue;
     private Double priority;

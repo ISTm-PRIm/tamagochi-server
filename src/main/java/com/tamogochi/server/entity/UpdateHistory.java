@@ -10,8 +10,9 @@ import java.util.Date;
 @Table(name = "UPDATE_HISTORY")
 public class UpdateHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Enumerated(EnumType.STRING)
     private Indicator indicator;
     private Boolean isScheduling;
     private int decrementValue;
