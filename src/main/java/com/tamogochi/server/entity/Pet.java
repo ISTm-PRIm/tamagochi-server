@@ -20,4 +20,20 @@ public class Pet {
     private int healthIndicator;
     private int cleanIndicator;
     private int sleepIndicator;
+
+    public void decrementFoodIndicator(int value) {
+        this.foolIndicator -= value;
+    }
+
+    public void decrementHealthIndicator(int value) {
+        this.healthIndicator -= value;
+    }
+
+    public void decrementCleanIndicator(int value) {
+        this.cleanIndicator -= value;
+    }
+
+    public void decrementSleepIndicator(int value) {
+        this.sleepIndicator -= value;
+    }
 }

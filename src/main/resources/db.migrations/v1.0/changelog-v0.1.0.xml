@@ -8,4 +8,5 @@
       <tagDatabase tag="v1.0"/>
    </changeSet>
    <include file="db.migrations/v1.0/init-schema.sql"/>
+   <include file="db.migrations/v1.0/scheduler.sql"/>
 </databaseChangeLog>

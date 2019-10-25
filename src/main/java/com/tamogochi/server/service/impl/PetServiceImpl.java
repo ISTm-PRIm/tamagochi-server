@@ -9,6 +9,7 @@ import com.tamogochi.server.repository.PetRepository;
 import com.tamogochi.server.repository.UserRepository;
 import com.tamogochi.server.service.api.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -46,6 +47,12 @@ public class PetServiceImpl implements PetService {
         user.setPet(pet);
         userRepository.save(user);
         return pet;
+    }
+
+    @Override
+    public Page<Pet> findAllByLastDay() {
+//        Page<Pet> pets = petRepository
+        return null;
     }
 
     private Pet create(String name) {

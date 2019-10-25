@@ -13,6 +13,7 @@ public class User {
     private String id;
     private String email;
     private Date createDate;
+    private Date lastDate;
     @OneToOne
     @JoinColumn(name = "pet")
     private Pet pet;
