@@ -20,7 +20,7 @@
 		<springfox.swagger.version>2.8.0</springfox.swagger.version>
 		<spring-security-oauth2.version>2.3.4.RELEASE</spring-security-oauth2.version>
 	</properties>
-
+<!--https://github.com/ISTm-PRIm/tamagochi-server.git-->
 	<scm>
 		<connection>scm:git:ssh://git@github.com/ISTm-PRIm/tamagochi-server.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/ISTm-PRIm/tamagochi-server.git</developerConnection>
