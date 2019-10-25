@@ -4,6 +4,5 @@ public enum  Indicator {
     FOOD_INDICATOR,
     HEALTH_INDICATOR,
     CLEAN_INDICATOR,
-    SLEEP_INDICATOR;
-
+    SLEEP_INDICATOR
 }
