@@ -9,8 +9,7 @@ import javax.validation.constraints.Size;
 @Data
 @ApiModel("PetCreateRequest")
 public class PetCreateRequest {
-    @Size(max = 36)
-    private String userId;
+    private Long userId;
     @NotBlank
     @Size(max = 36)
     private String name;

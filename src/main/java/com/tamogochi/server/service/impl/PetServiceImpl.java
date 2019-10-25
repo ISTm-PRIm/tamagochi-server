@@ -1,34 +1,35 @@
 package com.tamogochi.server.service.impl;
 
-import com.tamogochi.server.entity.Pet;
-import com.tamogochi.server.entity.User;
+import com.tamogochi.server.entity.*;
 import com.tamogochi.server.exception.EntityNotFoundException;
 import com.tamogochi.server.exception.IncorrectRequestException;
 import com.tamogochi.server.exception.Message;
 import com.tamogochi.server.repository.PetRepository;
-import com.tamogochi.server.repository.UserRepository_old;
+import com.tamogochi.server.repository.UserRepository;
 import com.tamogochi.server.service.api.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-@Service
+import static com.tamogochi.server.service.Constant.INDICATOR_MAX_VALUE;
+
+@Service("petService")
 public class PetServiceImpl implements PetService {
 
     private final PetRepository petRepository;
-    private final UserRepository_old userRepository;
-    private final int INDICATOR_MAX_VALUE = 100;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PetServiceImpl(PetRepository petRepository, UserRepository_old userRepository) {
+    public PetServiceImpl(PetRepository petRepository, UserRepository userRepository) {
         this.petRepository = petRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    public Pet create(String userId, String name) {
+    public Pet create(Long userId, String name) {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new EntityNotFoundException(Message.USER_NOT_FOUND);
@@ -47,6 +48,38 @@ public class PetServiceImpl implements PetService {
         userRepository.save(user);
         return pet;
     }
+
+    private Pet decrementIndicator(Pet pet, Indicator indicator, int decValue) {
+        if (pet == null) return pet; //todo нужна обработка ошибок или забьем по классике?
+        switch (indicator) {
+            case FOOD_INDICATOR:
+                pet.decrementFoodIndicator(decValue);
+                break;
+            case CLEAN_INDICATOR:
+                pet.decrementCleanIndicator(decValue);
+                break;
+            case HEALTH_INDICATOR:
+                pet.decrementHealthIndicator(decValue);
+                break;
+            case SLEEP_INDICATOR:
+                pet.decrementSleepIndicator(decValue);
+                break;
+        }
+        return pet;
+    }
+
+    @Override
+    public void changeIndicator(List<UpdateHistory> historyList) {
+        List<Pet> pets = (List<Pet>) petRepository.findAll();
+        for (Pet pet : pets) {
+            for (UpdateHistory history: historyList) {
+                Indicator indicator = history.getIndicator();
+                decrementIndicator(pet, indicator, history.getDecrementValue());
+            }
+            pet = petRepository.save(pet);
+        }
+    }
+
 
     private Pet create(String name) {
         Pet pet = new Pet();
