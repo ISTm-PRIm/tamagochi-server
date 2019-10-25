@@ -1,41 +1,52 @@
 package com.tamogochi.server.entity;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")})
+        @UniqueConstraint(columnNames = "email")
+})
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
     @Email
+    @Column(nullable = false)
     private String email;
+
     private String imageUrl;
+
+    @Column(nullable = false)
     private Boolean emailVerified = false;
-    private Boolean isOnline = false;
 
     @JsonIgnore
     private String password;
-
-    @OneToOne
-    @JoinColumn(name = "pet")
-    private Pet pet;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
 
     private String providerId;
+
+    @OneToOne
+    @JoinColumn(name = "pet")
+    private Pet pet;
+
+    @Column(nullable = false)
     private Date createDate;
+
+    @Column(nullable = false)
+    private Boolean isOnline = false;
 
     public Long getId() {
         return id;
@@ -100,5 +111,4 @@ public class User {
     public void setProviderId(String providerId) {
         this.providerId = providerId;
     }
-
 }

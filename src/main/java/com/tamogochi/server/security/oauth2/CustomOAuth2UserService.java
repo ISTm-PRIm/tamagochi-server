@@ -1,8 +1,8 @@
 package com.tamogochi.server.security.oauth2;
 
-import com.tamogochi.server.exception.OAuth2AuthenticationProcessingException;
 import com.tamogochi.server.entity.AuthProvider;
 import com.tamogochi.server.entity.User;
+import com.tamogochi.server.exception.OAuth2AuthenticationProcessingException;
 import com.tamogochi.server.repository.UserRepository;
 import com.tamogochi.server.security.UserPrincipal;
 import com.tamogochi.server.security.oauth2.user.OAuth2UserInfo;
@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -70,12 +71,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setName(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
+        user.setCreateDate(new Date(System.currentTimeMillis()));
+        user.setIsOnline(true);
         return userRepository.save(user);
     }
 
     private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
         existingUser.setName(oAuth2UserInfo.getName());
         existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
+        existingUser.setIsOnline(true);
         return userRepository.save(existingUser);
     }
 

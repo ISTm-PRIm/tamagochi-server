@@ -1,8 +1,8 @@
 package com.tamogochi.server.controller;
 
-import com.tamogochi.server.exception.BadRequestException;
 import com.tamogochi.server.entity.AuthProvider;
 import com.tamogochi.server.entity.User;
+import com.tamogochi.server.exception.BadRequestException;
 import com.tamogochi.server.payload.ApiResponse;
 import com.tamogochi.server.payload.AuthResponse;
 import com.tamogochi.server.payload.LoginRequest;
@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.sql.Date;
 
 @RestController
 @RequestMapping("/auth")
@@ -71,6 +72,7 @@ public class AuthController {
         user.setProvider(AuthProvider.local);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreateDate(new Date(System.currentTimeMillis()));
 
         User result = userRepository.save(user);
 

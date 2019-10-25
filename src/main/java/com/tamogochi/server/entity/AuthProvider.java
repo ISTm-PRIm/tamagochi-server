@@ -1,8 +1,8 @@
 package com.tamogochi.server.entity;
 
-public enum AuthProvider {
+public enum  AuthProvider {
     local,
     facebook,
     google,
-    github,
+    github
 }

@@ -1,57 +1,57 @@
 spring:
-    datasource:
-        url: jdbc:postgresql://localhost:5432/tamagochi
-        username: postgres
-        password: root
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tamagochi
+    username: postgres
+    password: root
 
-    jpa:
-        show-sql: true
-        hibernate:
-            ddl-auto: none
-            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.PostgreSQL9Dialect
-                temp.use_jdbc_metadata_defaults: false
-    security:
-      oauth2:
-        client:
-          registration:
-            google:
-              clientId: 410438582089-msmvp52fnkjapmevuus17k4d5fpg90ni.apps.googleusercontent.com
-              clientSecret: $(GoogleClientSecret}
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - profile
-            facebook:
-              clientId: 442278779803144
-              clientSecret: $(FaceBookClientSecret}
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-                - public_profile
-            github:
-              clientId: 7175794
-              clientSecret: $(VKClientSecret}
-              redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
-              scope:
-                - email
-          provider:
-            facebook:
-              authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
-              tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
-              userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
-            google:
-              authorizationUri: https://accounts.google.com/o/oauth2/v2/auth
-              tokenUri: https://oauth2.googleapis.com/token
-              userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo?fields=id,name,email,picture,email,gender,given_name,hd,link,locale,verified_email
-            github:
-              authorizationUri: https://oauth.vk.com/authorize?v=5.102
-              tokenUri: https://oauth.vk.com/access_token
-              userInfoUri: https://api.vk.com/method/account.getProfileInfo
-    liquibase:
-      change-log: classpath:/db.migrations/changelog.xml
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 410438582089-msmvp52fnkjapmevuus17k4d5fpg90ni.apps.googleusercontent.com
+            clientSecret: $(clientSecret}
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: 442278779803144
+            clientSecret: 229e03efb53683a3542792126150d65a
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+          github:
+            clientId: 7175794
+            clientSecret: Bk4jJbIm39EHaDdrYCrY
+            redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+        provider:
+          facebook:
+            authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+            tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+            userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+          google:
+            authorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+            tokenUri: https://oauth2.googleapis.com/token
+            userInfoUri: https://www.googleapis.com/oauth2/v2/userinfo?fields=id,name,email,picture,email,gender,given_name,hd,link,locale,verified_email
+          github:
+            authorizationUri: https://oauth.vk.com/authorize?v=5.102
+            tokenUri: https://oauth.vk.com/access_token
+            userInfoUri: https://api.vk.com/method/account.getProfileInfo
+  liquibase:
+    change-log: classpath:/db.migrations/changelog.xml
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC

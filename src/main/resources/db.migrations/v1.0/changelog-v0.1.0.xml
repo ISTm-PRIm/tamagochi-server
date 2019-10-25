@@ -22,5 +22,13 @@
 
    <changeSet id="3" author="oleg">
       <modifyDataType tableName="USERS" columnName="id" newDataType="bigint"></modifyDataType>
+
+   </changeSet>
+   <changeSet author="oleg" id="4">
+      <renameColumn
+                    columnDataType="BOOLEAN"
+                    newColumnName="email_verified"
+                    oldColumnName="emailVerified"
+                    tableName="USERS"/>
    </changeSet>
 </databaseChangeLog>
