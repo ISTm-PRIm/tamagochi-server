@@ -1,6 +1,5 @@
 package com.tamogochi.server.service.impl;
 
-import com.tamogochi.server.entity.Pet;
 import com.tamogochi.server.entity.Scheduler;
 import com.tamogochi.server.entity.UpdateHistory;
 import com.tamogochi.server.repository.SchedulerRepository;
@@ -63,20 +62,6 @@ public class SchedulerServiceImpl implements SchedulerService {
         return oldCurrentDate.compareTo(nextDate) == 0;
     }
 
-    private void decrementIndicator(Pet pet, Indicator indicator, int decValue) {
-        if (pet == null) return; //todo нужна обработка ошибок или забьем по классике?
-        switch (indicator) {
-            case FOOD_INDICATOR:
-                pet.decrementFoodIndicator(decValue);
-            case CLEAN_INDICATOR:
-                pet.decrementCleanIndicator(decValue);
-            case HEALTH_INDICATOR:
-                pet.decrementHealthIndicator(decValue);
-            case SLEEP_INDICATOR:
-                pet.decrementSleepIndicator(decValue);
-        }
-    }
-
     @Override
     public List<UpdateHistory> createHistoriesForScheduler() {
         LocalDateTime currentLocalDateTime = LocalDateTime.now().withSecond(0).withNano(0);
@@ -84,8 +69,10 @@ public class SchedulerServiceImpl implements SchedulerService {
 
         for (Indicator indicator : Indicator.values()) {
             Scheduler config = getSuitableScheduledConfig(indicator, currentLocalDateTime);
-            UpdateHistory history = createHistory(indicator, config.getDecrementValue(), true);
-            result.add(history);
+            if (config.getDecrementValue() != 0) {
+                UpdateHistory history = createHistory(indicator, config.getDecrementValue(), true);
+                result.add(history);
+            }
         }
         return result;
     }

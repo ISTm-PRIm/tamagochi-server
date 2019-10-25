@@ -12,6 +12,7 @@ public class SchedulerRoute extends RouteBuilder {
                 .routeId("startScheduler")
                 .log("scheduler is start!")
                 .bean("schedulerService", "createHistoriesForScheduler()")
+                .bean("petService", "changeIndicator(${body})")
 
         ;
 
