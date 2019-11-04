@@ -29,7 +29,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet create(String userId, String name) {
+    public Pet create(Long userId, String name) {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new EntityNotFoundException(Message.USER_NOT_FOUND);

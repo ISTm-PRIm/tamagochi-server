@@ -6,6 +6,6 @@ import com.tamogochi.server.entity.UpdateHistory;
 import java.util.List;
 
 public interface PetService {
-    Pet create(String userId, String name);
     void changeIndicator(List<UpdateHistory> historList);
+    Pet create(Long userId, String name);
 }
