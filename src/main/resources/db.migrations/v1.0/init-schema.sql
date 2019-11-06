@@ -23,6 +23,7 @@ CREATE TABLE USERS (
   is_online       BOOLEAN,
   email_verified  BOOLEAN,
   create_date      TIMESTAMP,
+  last_date      TIMESTAMP,
   pet             VARCHAR(36) NULL,
   CONSTRAINT FK_PET_USER
   FOREIGN KEY (PET) REFERENCES PET (id)
