@@ -31,7 +31,7 @@ public class PetController {
         return new PetCreateResponse(petMapper.toDto(pet));
     }
 
-    @PostMapping(value = "/delete")
+    @PostMapping(value = "/die")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PetDeleteResponse delete(@Valid @RequestBody PetDeleteRequest request) {

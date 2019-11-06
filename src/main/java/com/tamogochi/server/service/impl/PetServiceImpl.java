@@ -34,6 +34,9 @@ public class PetServiceImpl implements PetService {
         User user = userRepository.getUserById(userId);
         if (user == null) {
             throw new EntityNotFoundException(Message.USER_NOT_FOUND);
+        } else {
+            user.setPet(null);
+            userRepository.save(user);
         }
         Pet oldPet = user.getPet();
         if (oldPet != null) {
