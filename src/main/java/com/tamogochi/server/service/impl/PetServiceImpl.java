@@ -6,6 +6,7 @@ import com.tamogochi.server.exception.IncorrectRequestException;
 import com.tamogochi.server.exception.Message;
 import com.tamogochi.server.repository.PetRepository;
 import com.tamogochi.server.repository.UserRepository;
+import com.tamogochi.server.service.Constant;
 import com.tamogochi.server.service.api.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,25 @@ public class PetServiceImpl implements PetService {
         return pet;
     }
 
+    @Override
+    public Pet die(String petId) {
+        Pet pet = get(petId);
+        pet.setFoolIndicator(Constant.INDICATOR_MIN_VALUE);
+        pet.setHealthIndicator(Constant.INDICATOR_MIN_VALUE);
+        pet.setIsAlive(false);
+
+        return petRepository.save(pet);
+    }
+
+    @Override
+    public Pet get(String petId) {
+        Pet pet = petRepository.getPetById(petId);
+        if (pet == null) {
+            throw new EntityNotFoundException(Message.PET_NOT_FOUND);
+        }
+        return pet;
+    }
+
     private Pet decrementIndicator(Pet pet, Indicator indicator, int decValue) {
         if (pet == null) return pet; //todo нужна обработка ошибок или забьем по классике?
         switch (indicator) {
@@ -72,7 +92,7 @@ public class PetServiceImpl implements PetService {
     public void changeIndicator(List<UpdateHistory> historyList) {
         List<Pet> pets = petRepository.findAll();
         for (Pet pet : pets) {
-            for (UpdateHistory history: historyList) {
+            for (UpdateHistory history : historyList) {
                 Indicator indicator = history.getIndicator();
                 decrementIndicator(pet, indicator, history.getDecrementValue());
             }
