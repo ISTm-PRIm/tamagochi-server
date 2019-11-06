@@ -21,21 +21,21 @@ spring:
         registration:
           google:
             clientId: 410438582089-msmvp52fnkjapmevuus17k4d5fpg90ni.apps.googleusercontent.com
-            clientSecret: $(clientSecret}
+            clientSecret: $(GoogleClientSecret}
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - profile
           facebook:
             clientId: 442278779803144
-            clientSecret: 229e03efb53683a3542792126150d65a
+            clientSecret: $(FaceBookClientSecret}
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - public_profile
           github:
             clientId: 7175794
-            clientSecret: Bk4jJbIm39EHaDdrYCrY
+            clientSecret: $(VKClientSecret}
             redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
