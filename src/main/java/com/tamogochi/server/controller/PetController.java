@@ -1,8 +1,10 @@
 package com.tamogochi.server.controller;
 
+import com.tamogochi.server.dto.request.PetApplyActionRequest;
 import com.tamogochi.server.dto.request.PetCreateRequest;
 import com.tamogochi.server.dto.request.PetDeleteRequest;
 import com.tamogochi.server.dto.request.PetPostRequest;
+import com.tamogochi.server.dto.response.PetApplyActionResponse;
 import com.tamogochi.server.dto.response.PetCreateResponse;
 import com.tamogochi.server.dto.response.PetDeleteResponse;
 import com.tamogochi.server.dto.response.PetPostResponse;
@@ -20,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/pet")
@@ -29,8 +30,7 @@ public class PetController {
 
     private final PetService petService;
     private final PetMapper petMapper;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @PostMapping(value = "/create")
     @ResponseBody
@@ -57,4 +57,14 @@ public class PetController {
         Pet pet = petService.get(request.getPetId());
         return new PetPostResponse(petMapper.toDto(pet));
     }
+
+    @PostMapping(value = "/action")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public PetApplyActionResponse applyAction(@Valid @RequestBody PetApplyActionRequest request, @CurrentUser UserPrincipal userPrincipal) {
+        Pet pet = petService.applyAction(request.getAction(), userPrincipal);
+        return new PetApplyActionResponse(petMapper.toDto(pet));
+    }
+
+
 }

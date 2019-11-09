@@ -4,8 +4,10 @@ import com.tamogochi.server.entity.*;
 import com.tamogochi.server.exception.EntityNotFoundException;
 import com.tamogochi.server.exception.IncorrectRequestException;
 import com.tamogochi.server.exception.Message;
+import com.tamogochi.server.exception.ResourceNotFoundException;
 import com.tamogochi.server.repository.PetRepository;
 import com.tamogochi.server.repository.UserRepository;
+import com.tamogochi.server.security.UserPrincipal;
 import com.tamogochi.server.service.Constant;
 import com.tamogochi.server.service.api.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.tamogochi.server.entity.Indicator.CLEAN_INDICATOR;
+import static com.tamogochi.server.entity.Indicator.FOOD_INDICATOR;
+import static com.tamogochi.server.exception.Message.UNSUPPORTED_ACTION;
 import static com.tamogochi.server.service.Constant.INDICATOR_MAX_VALUE;
 
 @Service("petService")
@@ -70,6 +75,45 @@ public class PetServiceImpl implements PetService {
         return pet;
     }
 
+    @Override
+    public Pet get(UserPrincipal userPrincipal) {
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+        if (user.getPet() == null) {
+            throw new EntityNotFoundException(Message.PET_NOT_FOUND);
+        }
+        return user.getPet();
+    }
+
+    @Override
+    public Pet applyAction(ActionType action, UserPrincipal userPrincipal) {
+        Pet pet = get(userPrincipal);
+        switch (action) {
+            case FEED:
+                incrementIndicator(pet, FOOD_INDICATOR);
+                break;
+            case BATH:
+                incrementIndicator(pet, CLEAN_INDICATOR);
+                break;
+            default:
+                throw new IncorrectRequestException(UNSUPPORTED_ACTION);
+        }
+        return petRepository.save(pet);
+    }
+
+    private Pet incrementIndicator(Pet pet, Indicator indicator) {
+        if (pet == null) return pet; //todo нужна обработка ошибок или забьем по классике?
+        switch (indicator) {
+            case FOOD_INDICATOR:
+                pet.incFoodIndicator();
+                break;
+            case CLEAN_INDICATOR:
+                pet.incCleanIndicator();
+                break;
+        }
+        return pet;
+    }
+
     private Pet decrementIndicator(Pet pet, Indicator indicator, int decValue) {
         if (pet == null) return pet; //todo нужна обработка ошибок или забьем по классике?
         switch (indicator) {
@@ -79,9 +123,9 @@ public class PetServiceImpl implements PetService {
             case CLEAN_INDICATOR:
                 pet.decrementCleanIndicator(decValue);
                 break;
-            case HEALTH_INDICATOR:
-                pet.decrementHealthIndicator(decValue);
-                break;
+//            case HEALTH_INDICATOR: // снижается за счёт других показателей и рандомных болезней
+//                pet.decrementHealthIndicator(decValue);
+//                break;
             case SLEEP_INDICATOR:
                 pet.decrementSleepIndicator(decValue);
                 break;
