@@ -110,12 +110,18 @@ public class PetServiceImpl implements PetService {
             case CLEAN_INDICATOR:
                 pet.incCleanIndicator();
                 break;
+            case SLEEP_INDICATOR:
+                pet.incSleepIndicator();
+                break;
+            case HEALTH_INDICATOR:
+                pet.incHealthIndicator();
+                break;
         }
         return pet;
     }
 
     private Pet decrementIndicator(Pet pet, Indicator indicator, int decValue) {
-        if (pet == null) return pet; //todo нужна обработка ошибок или забьем по классике?
+        if (pet == null) return null; //todo нужна обработка ошибок или забьем по классике?
         switch (indicator) {
             case FOOD_INDICATOR:
                 pet.decrementFoodIndicator(decValue);
@@ -123,9 +129,11 @@ public class PetServiceImpl implements PetService {
             case CLEAN_INDICATOR:
                 pet.decrementCleanIndicator(decValue);
                 break;
-//            case HEALTH_INDICATOR: // снижается за счёт других показателей и рандомных болезней
-//                pet.decrementHealthIndicator(decValue);
-//                break;
+            case HEALTH_INDICATOR: // снижается за счёт других показателей и рандомных болезней
+                if (pet.isSick()) {
+                    pet.decrementHealthIndicator(decValue);
+                }
+                break;
             case SLEEP_INDICATOR:
                 pet.decrementSleepIndicator(decValue);
                 break;

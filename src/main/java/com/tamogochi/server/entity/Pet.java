@@ -8,9 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-import static com.tamogochi.server.service.Constant.INDICATOR_MAX_VALUE;
-import static com.tamogochi.server.service.Constant.INDICATOR_MIN_VALUE;
-import static com.tamogochi.server.service.Constant.MEAL_FOR_FOOD;
+import static com.tamogochi.server.service.Constant.*;
 
 @Entity
 @Table(name = "pet")
@@ -27,61 +25,63 @@ public class Pet {
     private int sleepIndicator;
 
     public void decrementFoodIndicator(int value) {
-        if (this.foolIndicator - value >= INDICATOR_MIN_VALUE) {
-            this.foolIndicator -= value;
-        }
+        boolean result = this.foolIndicator - value >= INDICATOR_MIN_VALUE;
+        this.foolIndicator = result ? this.foolIndicator - value : INDICATOR_MIN_VALUE;
         if (this.foolIndicator <= 20) {
-            decrementHealthIndicator(1);
-        }
-    }
-
-    public void incFoodIndicator() {
-        if (this.foolIndicator + MEAL_FOR_FOOD <= INDICATOR_MAX_VALUE) {
-            this.foolIndicator += MEAL_FOR_FOOD;
-        } else {
-            this.foolIndicator = INDICATOR_MAX_VALUE;
-        }
-    }
-
-    public void decrementHealthIndicator(int value) {
-        if (this.healthIndicator - value >= INDICATOR_MIN_VALUE) {
-            this.healthIndicator -= value;
-        }
-    }
-
-    public void incHealthIndicator(int value) {
-        if (this.healthIndicator + value <= healthIndicator) {
-            this.healthIndicator += value;
-        } else {
-            this.healthIndicator = INDICATOR_MAX_VALUE;
+            decrementHealthIndicator(SIDE_EFFECT_FOR_HEALTH);
         }
     }
 
     public void decrementCleanIndicator(int value) {
-        if (this.cleanIndicator - value >= INDICATOR_MIN_VALUE) {
-            this.cleanIndicator -= value;
-        }
+        boolean result = this.cleanIndicator - value >= INDICATOR_MIN_VALUE;
+        this.cleanIndicator = result ? this.cleanIndicator - value : INDICATOR_MIN_VALUE;
+
         if (this.cleanIndicator <= 20) {
-            decrementHealthIndicator(1);
+            decrementHealthIndicator(SIDE_EFFECT_FOR_HEALTH);
         }
+    }
+
+    public void decrementSleepIndicator(int value) {
+        boolean result = this.sleepIndicator - value >= INDICATOR_MIN_VALUE;
+        this.sleepIndicator = result ? this.sleepIndicator - value : INDICATOR_MIN_VALUE;
+
+        if (this.sleepIndicator <= 20) {
+            decrementHealthIndicator(SIDE_EFFECT_FOR_HEALTH);
+        }
+    }
+
+
+    public void decrementHealthIndicator(int value) {
+        boolean result = this.healthIndicator - value >= INDICATOR_MIN_VALUE;
+        this.healthIndicator = result ? this.healthIndicator - value : INDICATOR_MIN_VALUE;
+
+        if (this.healthIndicator == INDICATOR_MIN_VALUE) {
+            this.isAlive = false; // питомец умер
+        }
+    }
+
+    public void incFoodIndicator() {
+        boolean result = this.foolIndicator + MEAL_FOR_FOOD <= INDICATOR_MAX_VALUE;
+        this.sleepIndicator = result ? this.foolIndicator += MEAL_FOR_FOOD : INDICATOR_MAX_VALUE;
+    }
+
+    public void incHealthIndicator() {
+        boolean result = this.healthIndicator + DRUGS_FOR_SOUL <= INDICATOR_MAX_VALUE;
+        this.healthIndicator = result ? this.healthIndicator + DRUGS_FOR_SOUL : INDICATOR_MAX_VALUE;
+    }
+
+    public void incSleepIndicator() {
+        boolean result = this.sleepIndicator + GOOD_DREAMS <= INDICATOR_MAX_VALUE;
+        this.sleepIndicator = result ? this.sleepIndicator + GOOD_DREAMS : INDICATOR_MAX_VALUE;
+    }
+
+    // вероятность заболеть 10%
+    public Boolean isSick() {
+        return Math.random() < 0.1;
     }
 
     public void incCleanIndicator() {
         this.cleanIndicator = INDICATOR_MAX_VALUE;
     }
 
-    public void decrementSleepIndicator(int value) {
-        if (this.sleepIndicator - value >= INDICATOR_MIN_VALUE) {
-            this.sleepIndicator -= value;
-        }
-        if (this.sleepIndicator <= 20) {
-            decrementHealthIndicator(1);
-        }
-    }
-
-    public void incSleepIndicator(int value) {
-        if (this.sleepIndicator <= 25) {
-            this.sleepIndicator += value;
-        }
-    }
 }
