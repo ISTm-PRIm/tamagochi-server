@@ -89,16 +89,16 @@ public class PetServiceImpl implements PetService {
         Pet pet = get(userPrincipal);
         switch (action) {
             case FEED:
-                incrementIndicator(pet, FOOD_INDICATOR);
+                pet = incrementIndicator(pet, FOOD_INDICATOR);
                 break;
             case BATH:
-                incrementIndicator(pet, CLEAN_INDICATOR);
+                pet = incrementIndicator(pet, CLEAN_INDICATOR);
                 break;
             case SLEEP:
-                incrementIndicator(pet, SLEEP_INDICATOR);
+                pet = incrementIndicator(pet, SLEEP_INDICATOR);
                 break;
             case TREAT:
-                incrementIndicator(pet, HEALTH_INDICATOR);
+                pet = incrementIndicator(pet, HEALTH_INDICATOR);
                 break;
             default:
                 throw new IncorrectRequestException(UNSUPPORTED_ACTION);
