@@ -16,7 +16,7 @@ CREATE TABLE USERS (
   id              BIGINT PRIMARY KEY,
   email           VARCHAR(100),
   name            VARCHAR(255),
-  image_url       VARCHAR(255),
+  image_url       VARCHAR(1000),
   password        VARCHAR(255),
   provider        VARCHAR(255),
   provider_id     VARCHAR(255),
