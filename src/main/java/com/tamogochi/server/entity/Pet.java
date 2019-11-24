@@ -50,7 +50,6 @@ public class Pet {
         }
     }
 
-
     public void decrementHealthIndicator(int value) {
         boolean result = this.healthIndicator - value >= INDICATOR_MIN_VALUE;
         this.healthIndicator = result ? this.healthIndicator - value : INDICATOR_MIN_VALUE;
@@ -62,7 +61,7 @@ public class Pet {
 
     public void incFoodIndicator() {
         boolean result = this.foolIndicator + MEAL_FOR_FOOD <= INDICATOR_MAX_VALUE;
-        this.sleepIndicator = result ? this.foolIndicator += MEAL_FOR_FOOD : INDICATOR_MAX_VALUE;
+        this.foolIndicator = result ? this.foolIndicator += MEAL_FOR_FOOD : INDICATOR_MAX_VALUE;
     }
 
     public void incHealthIndicator() {
