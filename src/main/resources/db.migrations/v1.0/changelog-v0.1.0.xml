@@ -16,4 +16,8 @@
                         tableName="USERS"/>
    </changeSet>
    <include file="db.migrations/v1.0/scheduler.sql"/>
+   <changeSet author="oleg" id="alterUser">
+      <modifyDataType tableName="USERS" columnName="image_url" newDataType="NVARCHAR(1000)"/>
+   </changeSet>
+
 </databaseChangeLog>
