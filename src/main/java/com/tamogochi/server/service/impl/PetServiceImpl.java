@@ -17,8 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static com.tamogochi.server.entity.Indicator.CLEAN_INDICATOR;
-import static com.tamogochi.server.entity.Indicator.FOOD_INDICATOR;
+import static com.tamogochi.server.entity.Indicator.*;
 import static com.tamogochi.server.exception.Message.UNSUPPORTED_ACTION;
 import static com.tamogochi.server.service.Constant.INDICATOR_MAX_VALUE;
 
@@ -94,6 +93,12 @@ public class PetServiceImpl implements PetService {
                 break;
             case BATH:
                 incrementIndicator(pet, CLEAN_INDICATOR);
+                break;
+            case SLEEP:
+                incrementIndicator(pet, SLEEP_INDICATOR);
+                break;
+            case TREAT:
+                incrementIndicator(pet, HEALTH_INDICATOR);
                 break;
             default:
                 throw new IncorrectRequestException(UNSUPPORTED_ACTION);
